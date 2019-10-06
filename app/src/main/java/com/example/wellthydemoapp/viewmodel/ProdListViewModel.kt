@@ -1,5 +1,6 @@
 package com.example.wellthydemoapp.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wellthydemoapp.datamodel.Post
@@ -10,8 +11,8 @@ import javax.inject.Inject
 class ProdListViewModel
 @Inject constructor(val productRepository: ProductRepository) : ViewModel() {
 
-    fun getProductList(date: String): MutableLiveData<ArrayList<Post>> {
-        return productRepository.getProductByDate(date)
+    fun getProductList(date: String, applicationContext: Context): MutableLiveData<ArrayList<Post>> {
+        return productRepository.getProductByDate(date, applicationContext)
     }
 
 }

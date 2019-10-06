@@ -29,7 +29,7 @@ class ProductListAdapter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mProdName.text = mProdList!![position].name
-        Picasso.with(mContext).load(mProdList!![position].thumbnail!!.imageUrl)
+        Picasso.with(mContext).load(mProdList[position].thumbnail!!.imageUrl)
             .placeholder(R.drawable.loading)
             .error(R.drawable.error)
             .fit().into(holder.mProdImage)
@@ -43,8 +43,8 @@ class ProductListAdapter
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var mProdName: TextView
-        lateinit var mProdImage: ImageView
+        var mProdName: TextView
+        var mProdImage: ImageView
 
         init {
             mProdName = itemView.findViewById(R.id.prodName)
@@ -52,7 +52,7 @@ class ProductListAdapter
         }
 
 
-        fun bind(dogName: String, listener: ItemClickListener) {
+        fun bind(listener: ItemClickListener) {
             itemView.setOnClickListener { listener.onClick(mProdName.text.toString()) }
         }
     }

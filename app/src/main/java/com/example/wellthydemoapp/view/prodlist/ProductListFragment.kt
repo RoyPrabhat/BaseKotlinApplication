@@ -75,7 +75,7 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setUpButton() {
-        mSelectDate!!.setOnClickListener { view ->
+        mSelectDate!!.setOnClickListener { _ ->
             val newFragment = DatePickerFragment()
             newFragment.setTargetFragment(this, REQUEST_CODE)
             newFragment.show(fragmentManager!!, "DatePicker")
@@ -88,13 +88,13 @@ class ProductListFragment : Fragment() {
             val selectedDate = data!!.getStringExtra("selectedDate")
             mSelectedDate!!.text = selectedDate
             mProgressBar!!.visibility = View.VISIBLE
-            mProductListViewModel!!.getProductList(selectedDate)
+            mProductListViewModel!!.getProductList(selectedDate, activity!!.applicationContext)
         }
     }
 
     private fun initializeViewModel() {
         mProductListViewModel = ViewModelProviders.of(this, mViewModelFactory)
-            .get(ProdListViewModel::class.java!!)
+            .get(ProdListViewModel::class.java)
     }
 
     private fun initializeRecyclerView() {
@@ -116,7 +116,7 @@ class ProductListFragment : Fragment() {
 
     private fun initializeObserver() {
 
-        mProductListViewModel!!.getProductList(DateUtil.currentDate).observe(viewLifecycleOwner, Observer { newList ->
+        mProductListViewModel!!.getProductList(DateUtil.currentDate, activity!!.applicationContext).observe(viewLifecycleOwner, Observer { newList ->
             if (newList != null) {
                 updateProductList(newList)
             }
@@ -124,7 +124,7 @@ class ProductListFragment : Fragment() {
     }
 
     private fun updateProductList(newList: ArrayList<Post>) {
-        if (newList!!.size > 0) {
+        if (newList.size > 0) {
             mProgressBar!!.visibility = View.GONE
         }
         mProdList!!.clear();
