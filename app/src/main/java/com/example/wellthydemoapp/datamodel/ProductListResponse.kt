@@ -6,4 +6,5 @@ import com.google.gson.annotations.SerializedName
 class ProductListResponse(
     @SerializedName("posts")
     @Expose
-    var posts: ArrayList<Post>? = null)
+    var posts: ArrayList<Post>? = null
+)

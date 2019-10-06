@@ -1,37 +1,47 @@
 package com.example.wellthydemoapp.view.prodlist
 
-import androidx.fragment.app.Fragment
+
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import javax.inject.Inject
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellthydemoapp.adapter.ProductListAdapter
-import com.example.wellthydemoapp.datamodel.Post
-import androidx.lifecycle.ViewModelProviders
 import com.example.wellthydemoapp.base.MyApplication
+import com.example.wellthydemoapp.component.DatePickerFragment
+import com.example.wellthydemoapp.datamodel.Post
+import com.example.wellthydemoapp.util.DateUtil
 import com.example.wellthydemoapp.viewmodel.ProdListViewModel
 import com.example.wellthydemoapp.viewmodel.ViewModelFactory
-import kotlin.collections.ArrayList
-import androidx.recyclerview.widget.GridLayoutManager
+import javax.inject.Inject
 
 
-
-
-class ProductListFragment : Fragment(){
+class ProductListFragment : Fragment() {
 
     private var mProdList: ArrayList<Post>? = null
     private var mBreedRecyclerView: RecyclerView? = null
     private var mProdListAdapter: ProductListAdapter? = null
-    private var mProductListViewModel : ProdListViewModel? = null
+    private var mProductListViewModel: ProdListViewModel? = null
+    private var mProgressBar: ProgressBar? = null
+    private var mSelectDate: Button? = null
+    private var mSelectedDate: TextView? = null
     val COLUMN_COUNT = 2
+    val REQUEST_CODE = 11
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-
 
         (activity!!.application as MyApplication)
             .applicationComponent!!
@@ -43,7 +53,6 @@ class ProductListFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //setHasOptionsMenu(true)
         return inflater.inflate(com.example.wellthydemoapp.R.layout.fragment_product_list, container, false)
     }
 
@@ -54,17 +63,38 @@ class ProductListFragment : Fragment(){
 
     private fun setUp() {
         mBreedRecyclerView = view!!.findViewById(com.example.wellthydemoapp.R.id.prodList)
+        mProgressBar = view!!.findViewById(com.example.wellthydemoapp.R.id.progressBar)
+        mSelectDate = view!!.findViewById(com.example.wellthydemoapp.R.id.selectDate)
+        mSelectedDate = view!!.findViewById(com.example.wellthydemoapp.R.id.selectedDate)
+        mSelectedDate!!.text = DateUtil.currentDate
         mProdList = ArrayList()
         initializeViewModel()
         initializeRecyclerView()
         initializeObserver()
+        setUpButton()
+    }
+
+    private fun setUpButton() {
+        mSelectDate!!.setOnClickListener { view ->
+            val newFragment = DatePickerFragment()
+            newFragment.setTargetFragment(this, REQUEST_CODE)
+            newFragment.show(fragmentManager!!, "DatePicker")
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val selectedDate = data!!.getStringExtra("selectedDate")
+            mSelectedDate!!.text = selectedDate
+            mProgressBar!!.visibility = View.VISIBLE
+            mProductListViewModel!!.getProductList(selectedDate)
+        }
     }
 
     private fun initializeViewModel() {
         mProductListViewModel = ViewModelProviders.of(this, mViewModelFactory)
             .get(ProdListViewModel::class.java!!)
-
-        mProductListViewModel!!.getProductList();
     }
 
     private fun initializeRecyclerView() {
@@ -86,7 +116,7 @@ class ProductListFragment : Fragment(){
 
     private fun initializeObserver() {
 
-        mProductListViewModel!!.getProductList().observe(viewLifecycleOwner, Observer { newList ->
+        mProductListViewModel!!.getProductList(DateUtil.currentDate).observe(viewLifecycleOwner, Observer { newList ->
             if (newList != null) {
                 updateProductList(newList)
             }
@@ -94,6 +124,9 @@ class ProductListFragment : Fragment(){
     }
 
     private fun updateProductList(newList: ArrayList<Post>) {
+        if (newList!!.size > 0) {
+            mProgressBar!!.visibility = View.GONE
+        }
         mProdList!!.clear();
         mProdList!!.addAll(newList);
         mProdListAdapter!!.notifyDataSetChanged()

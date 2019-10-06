@@ -8,7 +8,6 @@ import com.example.wellthydemoapp.view.prodlist.ProductListFragment
 
 open class BaseActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)

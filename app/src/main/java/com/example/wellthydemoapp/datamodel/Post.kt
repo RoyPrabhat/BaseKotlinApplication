@@ -3,7 +3,7 @@ package com.example.wellthydemoapp.datamodel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Post (
+data class Post(
     @SerializedName("comments_count")
     @Expose
     var commentsCount: Int? = null,

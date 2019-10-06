@@ -1,5 +1,6 @@
 package com.example.wellthydemoapp.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.wellthydemoapp.api.ProductApiClient
 import com.example.wellthydemoapp.api.ProductApiService
@@ -16,29 +17,27 @@ class ProductRepository {
 
     fun getProductByDate(date: String): MutableLiveData<ArrayList<Post>> {
 
-        if (productList != null && productList!!.value != null) {
-            return productList!!
-        } else {
-            mProductApiService = ProductApiClient.createService(ProductApiService::class.java)
+        mProductApiService = ProductApiClient.createService(ProductApiService::class.java)
 
+        if (productList == null)
             productList = MutableLiveData()
 
-            mProductApiService.getProductByDate("2019-10-05")
-                .enqueue(object : Callback<ProductListResponse> {
-                    override fun onResponse(call: Call<ProductListResponse>, response: Response<ProductListResponse>) {
-                        if(response.isSuccessful){
-                            productList!!.value = response.body()!!.posts
-                        }
+        mProductApiService.getProductByDate(date)
+            .enqueue(object : Callback<ProductListResponse> {
+                override fun onResponse(call: Call<ProductListResponse>, response: Response<ProductListResponse>) {
+                    if (response.isSuccessful) {
+                        productList!!.value = response.body()!!.posts
+                        Log.i("HELLO", "HELLO")
                     }
+                }
 
-                    override fun onFailure(call: Call<ProductListResponse>, t: Throwable) {
-                        productList!!.value = null
-                    }
+                override fun onFailure(call: Call<ProductListResponse>, t: Throwable) {
+                    productList!!.value = null
+                }
 
-                })
+            })
 
-            return productList!!
-        }
+        return productList!!
     }
 
 }

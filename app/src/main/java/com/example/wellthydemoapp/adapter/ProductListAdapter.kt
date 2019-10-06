@@ -15,8 +15,8 @@ import java.util.ArrayList
 
 class ProductListAdapter
 //  private final ItemClickListener mListener;
-    (private val mProdList: ArrayList<Post>?, private val mContext: FragmentActivity?)
-    : RecyclerView.Adapter<ProductListAdapter.MyViewHolder>() {
+    (private val mProdList: ArrayList<Post>?, private val mContext: FragmentActivity?) :
+    RecyclerView.Adapter<ProductListAdapter.MyViewHolder>() {
 
     interface ItemClickListener {
         fun onClick(dogName: String)
@@ -29,11 +29,11 @@ class ProductListAdapter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mProdName.text = mProdList!![position].name
-                Picasso.with(mContext).load(mProdList!![position].thumbnail!!.imageUrl)
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.error)
-                    .fit().into(holder.mProdImage)
-              //  holder.bind(mBreedList.get(position), mListener);
+        Picasso.with(mContext).load(mProdList!![position].thumbnail!!.imageUrl)
+            .placeholder(R.drawable.loading)
+            .error(R.drawable.error)
+            .fit().into(holder.mProdImage)
+        //  holder.bind(mBreedList.get(position), mListener);
     }
 
     override fun getItemCount(): Int {

@@ -1,12 +1,10 @@
 package com.example.wellthydemoapp.di
 
 import com.example.wellthydemoapp.api.ProductApiService
-import com.example.wellthydemoapp.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 import javax.inject.Singleton
 
 @Module
