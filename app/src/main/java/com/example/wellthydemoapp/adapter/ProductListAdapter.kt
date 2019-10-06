@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.datamodel.Post
+import com.example.wellthydemoapp.util.ConnectivityUtil
 import com.squareup.picasso.Picasso
 
 import java.util.ArrayList
@@ -29,10 +30,13 @@ class ProductListAdapter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mProdName.text = mProdList!![position].name
-        Picasso.with(mContext).load(mProdList[position].thumbnail!!.imageUrl)
-            .placeholder(R.drawable.loading)
-            .error(R.drawable.error)
-            .fit().into(holder.mProdImage)
+        if(ConnectivityUtil.isNetworkConnected(mContext!!.applicationContext)) {
+            Picasso.with(mContext).load(mProdList[position].thumbnail!!.imageUrl)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.error)
+                .fit().into(holder.mProdImage)
+        }
+
         //  holder.bind(mBreedList.get(position), mListener);
     }
 

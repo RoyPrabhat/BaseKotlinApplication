@@ -130,7 +130,6 @@ class ProductListFragment : Fragment() {
         mProdList!!.clear();
         mProdList!!.addAll(newList);
         mProdListAdapter!!.notifyDataSetChanged()
-
     }
 
 

@@ -41,7 +41,10 @@ class ProductRepository @Inject constructor(val productDB: ProductDB)  {
 
                                 val myExecutor = Executors.newSingleThreadExecutor()
                                 myExecutor.execute({
-                                    response.body()!!.posts?.let { productDB.productDao().insertAll(it) } })
+                                    response.body()!!.posts?.let {
+                                        productDB.productDao().insertAll(it)
+                                    }
+                                })
 
 //                                response.body()!!.posts?.let { productDB.productDao().insertAll(it) }
 //
@@ -62,11 +65,17 @@ class ProductRepository @Inject constructor(val productDB: ProductDB)  {
 
                 })
         } else {
-            Toast.makeText(applicationContext, "No Internet", Toast.LENGTH_SHORT).show()
+
+            var roomData : ArrayList<Post>? = null
+
             val myExecutor = Executors.newSingleThreadExecutor()
-            myExecutor.execute({
-                productList!!.value = productDB.productDao().getAll() })
-        }
+            myExecutor.execute {
+                roomData  =  ArrayList(productDB.productDao().getAll())
+
+            }
+            Toast.makeText(applicationContext, "No Internet", Toast.LENGTH_SHORT).show()
+            productList!!.value = roomData
+            }
 
         return productList!!
     }

@@ -7,10 +7,10 @@ import com.example.wellthydemoapp.datamodel.Post
 interface ProductDao {
 
     @Query("SELECT * FROM post_list")
-    fun getAll(): ArrayList<Post>
+    fun getAll(): List<Post>
 
     @Query("SELECT * FROM post_list WHERE day LIKE :date")
-    fun findByDate(date: String): ArrayList<Post>
+    fun findByDate(date: String): List<Post>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(post: Post)
