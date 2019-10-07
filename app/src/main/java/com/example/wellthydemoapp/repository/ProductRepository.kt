@@ -73,7 +73,7 @@ class ProductRepository @Inject constructor(val productDB: ProductDB)  {
                 roomData  =  ArrayList(productDB.productDao().getAll())
 
             }
-            Toast.makeText(applicationContext, "No Internet", Toast.LENGTH_SHORT).show()
+
             productList!!.value = roomData
             }
 

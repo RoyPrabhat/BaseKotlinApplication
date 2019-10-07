@@ -16,7 +16,11 @@ import java.util.ArrayList
 
 class ProductListAdapter
 //  private final ItemClickListener mListener;
-    (private val mProdList: ArrayList<Post>?, private val mContext: FragmentActivity?) :
+    (
+    private val mProdList: ArrayList<Post>?,
+    private val mContext: FragmentActivity?,
+    private val itemClickListener: ItemClickListener
+) :
     RecyclerView.Adapter<ProductListAdapter.MyViewHolder>() {
 
     interface ItemClickListener {
@@ -35,9 +39,11 @@ class ProductListAdapter
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
                 .fit().into(holder.mProdImage)
+        } else {
+            holder.mProdImage.setImageDrawable(mContext.getDrawable(R.drawable.loading));
         }
 
-        //  holder.bind(mBreedList.get(position), mListener);
+          holder.bind(mProdList!![position].id, itemClickListener);
     }
 
     override fun getItemCount(): Int {
@@ -56,8 +62,8 @@ class ProductListAdapter
         }
 
 
-        fun bind(listener: ItemClickListener) {
-            itemView.setOnClickListener { listener.onClick(mProdName.text.toString()) }
+        fun bind(prodId: Int?, listener: ItemClickListener) {
+            itemView.setOnClickListener { listener.onClick(prodId.toString()) }
         }
     }
 }

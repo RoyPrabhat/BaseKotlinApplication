@@ -15,6 +15,7 @@
             android:theme="@style/AppTheme"
             android:name=".base.MyApplication">
         <activity android:name=".view.prodlist.ProductListActivity"/>
+        <activity android:name=".view.comment.CommentsListActivity"/>
         <activity android:name=".view.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

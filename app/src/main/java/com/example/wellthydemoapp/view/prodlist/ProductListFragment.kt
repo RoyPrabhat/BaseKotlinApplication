@@ -1,6 +1,5 @@
 package com.example.wellthydemoapp.view.prodlist
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -16,14 +15,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellthydemoapp.adapter.ProductListAdapter
+import com.example.wellthydemoapp.adapter.ProductListAdapter.ItemClickListener
 import com.example.wellthydemoapp.base.MyApplication
 import com.example.wellthydemoapp.component.DatePickerFragment
 import com.example.wellthydemoapp.datamodel.Post
 import com.example.wellthydemoapp.util.DateUtil
+import com.example.wellthydemoapp.view.comment.CommentsListActivity
 import com.example.wellthydemoapp.viewmodel.ProdListViewModel
 import com.example.wellthydemoapp.viewmodel.ViewModelFactory
 import javax.inject.Inject
-
 
 class ProductListFragment : Fragment() {
 
@@ -36,6 +36,7 @@ class ProductListFragment : Fragment() {
     private var mSelectedDate: TextView? = null
     val COLUMN_COUNT = 2
     val REQUEST_CODE = 11
+    val PRODUCT_ID = "PRODUCT_ID"
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
 
@@ -98,17 +99,15 @@ class ProductListFragment : Fragment() {
     }
 
     private fun initializeRecyclerView() {
-        mProdListAdapter = ProductListAdapter(mProdList, activity)
+        mProdListAdapter = ProductListAdapter(mProdList, activity,
+            object : ItemClickListener {
+                override fun onClick(productId: String) {
+                    val intent = Intent(activity, CommentsListActivity::class.java)
+                    intent.putExtra(PRODUCT_ID, productId)
+                    startActivity(intent)
+                }
 
-
-//            object : BreedListAdapter.ItemClickListener() {
-//
-//                fun onClick(dogName: String) {
-//                    val intent = Intent(activity, ImageListActivity::class.java)
-//                    intent.putExtra(Constants.DOG_NAME, dogName)
-//                    startActivity(intent)
-//                }
-//            }
+            })
 
         mBreedRecyclerView!!.setAdapter(mProdListAdapter)
         mBreedRecyclerView!!.setLayoutManager(GridLayoutManager(activity, COLUMN_COUNT))

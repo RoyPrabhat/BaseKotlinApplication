@@ -1,23 +1,47 @@
 package com.example.wellthydemoapp.base
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.wellthydemoapp.R
-import com.example.wellthydemoapp.view.prodlist.ProductListFragment
 
 open class BaseActivity : AppCompatActivity() {
 
+    private var mToolBar: Toolbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_list)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setContentView(com.example.wellthydemoapp.R.layout.activity_base)
     }
 
     open fun setUpFragment(fragment: Fragment) {
-        val productListFragment = ProductListFragment()
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.base_fragment, productListFragment)
+        transaction.add(com.example.wellthydemoapp.R.id.base_fragment, fragment)
         transaction.commit()
+    }
+
+    open fun setUpToolbar(title : String) {
+        mToolBar = findViewById(com.example.wellthydemoapp.R.id.include);
+        setSupportActionBar(mToolBar)
+        mToolBar!!.title = title;
+    }
+
+    open fun displayBackButton(shouldDisplayBackButton : Boolean) {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(shouldDisplayBackButton)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
     }
 }
