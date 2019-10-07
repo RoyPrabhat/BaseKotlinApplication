@@ -19,12 +19,6 @@ internal class APIModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun providesProductApiService(retrofit: Retrofit): ProductApiService {
-        return retrofit.create(ProductApiService::class.java)
-    }
-
     companion object {
         val BASE_API_URL = " https://api.producthunt.com/v1/"
     }

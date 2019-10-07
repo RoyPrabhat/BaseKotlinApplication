@@ -75,24 +75,6 @@ class ProductListFragment : Fragment() {
         setUpButton()
     }
 
-    private fun setUpButton() {
-        mSelectDate!!.setOnClickListener { _ ->
-            val newFragment = DatePickerFragment()
-            newFragment.setTargetFragment(this, REQUEST_CODE)
-            newFragment.show(fragmentManager!!, "DatePicker")
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val selectedDate = data!!.getStringExtra("selectedDate")
-            mSelectedDate!!.text = selectedDate
-            mProgressBar!!.visibility = View.VISIBLE
-            mProductListViewModel!!.getProductList(selectedDate, activity!!.applicationContext)
-        }
-    }
-
     private fun initializeViewModel() {
         mProductListViewModel = ViewModelProviders.of(this, mViewModelFactory)
             .get(ProdListViewModel::class.java)
@@ -114,13 +96,32 @@ class ProductListFragment : Fragment() {
     }
 
     private fun initializeObserver() {
-
         mProductListViewModel!!.getProductList(DateUtil.currentDate, activity!!.applicationContext).observe(viewLifecycleOwner, Observer { newList ->
             if (newList != null) {
                 updateProductList(newList)
             }
         })
     }
+
+    private fun setUpButton() {
+        mSelectDate!!.setOnClickListener { _ ->
+            val newFragment = DatePickerFragment()
+            newFragment.setTargetFragment(this, REQUEST_CODE)
+            newFragment.show(fragmentManager!!, "DatePicker")
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val selectedDate = data!!.getStringExtra("selectedDate")
+            mSelectedDate!!.text = selectedDate
+            mProgressBar!!.visibility = View.VISIBLE
+            mProductListViewModel!!.getProductList(selectedDate, activity!!.applicationContext)
+        }
+    }
+
+
 
     private fun updateProductList(newList: ArrayList<Post>) {
         if (newList.size > 0) {
@@ -130,6 +131,5 @@ class ProductListFragment : Fragment() {
         mProdList!!.addAll(newList);
         mProdListAdapter!!.notifyDataSetChanged()
     }
-
 
 }

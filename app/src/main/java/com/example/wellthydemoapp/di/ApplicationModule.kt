@@ -3,6 +3,7 @@ package com.example.wellthydemoapp.di
 import androidx.room.Room
 import com.example.wellthydemoapp.base.MyApplication
 import com.example.wellthydemoapp.db.ProductDB
+import com.example.wellthydemoapp.repository.CommentsRepository
 import com.example.wellthydemoapp.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
@@ -20,6 +21,12 @@ class ApplicationModule(private val application: MyApplication) {
     @Inject
     internal fun providesProductRepository(productDB : ProductDB): ProductRepository {
         return ProductRepository(productDB)
+    }
+
+    @Provides
+    @Inject
+    internal fun providesCommentRepository(): CommentsRepository {
+        return CommentsRepository()
     }
 
     @Provides

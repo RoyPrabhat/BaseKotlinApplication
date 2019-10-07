@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
 class ProductListAdapter
-//  private final ItemClickListener mListener;
     (
     private val mProdList: ArrayList<Post>?,
     private val mContext: FragmentActivity?,
