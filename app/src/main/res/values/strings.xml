@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WellthyDemoApp</string>
+    <string name="app_name">Product App</string>
 
     // toolbar titles
     <string name="product_list">Products</string>
@@ -11,6 +11,6 @@
 
     // Toast messages
     <string name="no_new_comments">No more comments</string>
-    <string name="no_data_available">No data available for the selted filter/Date</string>
+    <string name="no_data_available">No data available for the selected filter/Date</string>
     <string name="no_whatsapp">WhatsApp is not Installed on the device</string>
 </resources>
