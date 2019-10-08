@@ -16,4 +16,8 @@ class ProdListViewModel
         return productRepository.getProductByDate(date, applicationContext)
     }
 
+    fun getFilteredProduct(name: String, tagLine: String): LiveData<ArrayList<Post>> {
+        return productRepository.getFilteredProduct(name, tagLine)
+    }
+
 }

@@ -18,6 +18,6 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(posts: ArrayList<Post>)
 
-//    @Delete
-////    fun delete(todo: TodoEntity)
+    @Query("DELETE FROM post_list")
+    fun deleteAll()
 }

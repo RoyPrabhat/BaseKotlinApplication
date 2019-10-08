@@ -39,7 +39,7 @@ class ProductListAdapter
                 .error(R.drawable.error)
                 .fit().into(holder.mProdImage)
         } else {
-            holder.mProdImage.setImageDrawable(mContext.getDrawable(R.drawable.loading));
+            holder.mProdImage.setImageDrawable(mContext.getDrawable(R.drawable.product_loading));
         }
 
           holder.bind(mProdList!![position].id, itemClickListener);

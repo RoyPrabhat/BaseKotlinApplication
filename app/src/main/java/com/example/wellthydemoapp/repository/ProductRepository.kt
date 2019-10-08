@@ -1,7 +1,6 @@
 package com.example.wellthydemoapp.repository
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.wellthydemoapp.api.ProductApiClient
 import com.example.wellthydemoapp.api.ProductApiService
@@ -14,12 +13,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-import android.os.AsyncTask
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import com.example.wellthydemoapp.db.InsertTask
+import com.example.wellthydemoapp.db.RetrieveTask
+import com.example.wellthydemoapp.db.TaskCompleted
+import com.example.wellthydemoapp.util.DataFilterUtility
 
 
-class ProductRepository @Inject constructor(val productDB: ProductDB)  {
+class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskCompleted  {
 
     private var productList: MutableLiveData<ArrayList<Post>>? = null
     private lateinit var mProductApiService: ProductApiService
@@ -38,23 +38,7 @@ class ProductRepository @Inject constructor(val productDB: ProductDB)  {
                         if (response.isSuccessful) {
                             productList!!.value = response.body()!!.posts
                             if(date == DateUtil.currentDate ){
-
-                                val myExecutor = Executors.newSingleThreadExecutor()
-                                myExecutor.execute({
-                                    response.body()!!.posts?.let {
-                                        productDB.productDao().insertAll(it)
-                                    }
-                                })
-
-//                                response.body()!!.posts?.let { productDB.productDao().insertAll(it) }
-//
-//                                object : AsyncTask<ArrayList<Post>, Void, Void>() {
-//                                    override fun doInBackground(vararg posts: ArrayList<Post>): Void? {
-//                                        productDB.productDao().insertAll(posts)
-//                                        return null
-//                                    }
-//                                }.execute()
-
+                                InsertTask(productDB.productDao(), productList!!.value!!).execute()
                             }
                         }
                     }
@@ -66,17 +50,32 @@ class ProductRepository @Inject constructor(val productDB: ProductDB)  {
                 })
         } else {
 
-            var roomData : ArrayList<Post>? = null
-
-            val myExecutor = Executors.newSingleThreadExecutor()
-            myExecutor.execute {
-                roomData  =  ArrayList(productDB.productDao().getAll())
+            if(date == DateUtil.currentDate ){
+                RetrieveTask(productDB.productDao(), this).execute()
+            }
 
             }
 
-            productList!!.value = roomData
-            }
+        return productList!!
+    }
 
+    override fun onTaskComplete(result: List<Post>) {
+        productList!!.value = result?.let { ArrayList(it) }
+    }
+
+    fun getFilteredProduct(name: String, tagLine: String): MutableLiveData<ArrayList<Post>> {
+        if (productList == null)
+            productList = MutableLiveData()
+        if(productList!!.value!!.size != 0){
+            if(name == "" && tagLine != "" ){
+                productList!!.value = DataFilterUtility.filterDataByTagline(productList!!.value!!, tagLine)
+            } else if(name != "" && tagLine == "" ) {
+                productList!!.value = DataFilterUtility.filterDataByName(productList!!.value!!, name)
+            } else {
+                productList!!.value = DataFilterUtility.filterData(productList!!.value!!, name, tagLine)
+            }
+        } else {
+            productList!!.value = null}
         return productList!!
     }
 

@@ -97,7 +97,7 @@ class ProductListFragment : Fragment() {
 
     private fun initializeObserver() {
         mProductListViewModel!!.getProductList(DateUtil.currentDate, activity!!.applicationContext).observe(viewLifecycleOwner, Observer { newList ->
-            if (newList != null) {
+            if (newList != null && newList.size > 0) {
                 updateProductList(newList)
             }
         })
@@ -109,7 +109,6 @@ class ProductListFragment : Fragment() {
             newFragment.setTargetFragment(this, REQUEST_CODE)
             newFragment.show(fragmentManager!!, "DatePicker")
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -121,12 +120,8 @@ class ProductListFragment : Fragment() {
         }
     }
 
-
-
     private fun updateProductList(newList: ArrayList<Post>) {
-        if (newList.size > 0) {
-            mProgressBar!!.visibility = View.GONE
-        }
+        mProgressBar!!.visibility = View.GONE
         mProdList!!.clear();
         mProdList!!.addAll(newList);
         mProdListAdapter!!.notifyDataSetChanged()
