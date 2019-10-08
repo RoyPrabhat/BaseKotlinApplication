@@ -2,6 +2,7 @@ package com.example.wellthydemoapp.repository
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.api.ProductApiClient
 import com.example.wellthydemoapp.api.ProductApiService
 import com.example.wellthydemoapp.datamodel.Post
@@ -13,6 +14,7 @@ import com.example.wellthydemoapp.db.TaskCompleted
 import com.example.wellthydemoapp.util.ConnectivityUtil
 import com.example.wellthydemoapp.util.DataFilterUtility
 import com.example.wellthydemoapp.util.DateUtil
+import com.example.wellthydemoapp.util.ToastUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +52,7 @@ class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskComp
 
                 })
         } else {
+            ToastUtil.showToast(applicationContext, applicationContext.getString(R.string.no_internet))
             if (date == DateUtil.currentDate) {
                 RetrieveTask(productDB.productDao(), this).execute()
             }

@@ -95,7 +95,8 @@ class CommentListFragment : Fragment() {
 
     private fun initializeObserver() {
         mProgressBar!!.visibility = View.VISIBLE
-        mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.NEXT)
+        mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.NEXT,
+            activity!!.applicationContext)
             ?.observe(viewLifecycleOwner, Observer { newList ->
                 if (newList != null && newList.size > 0) {
                     updateProductList(newList)
@@ -108,12 +109,20 @@ class CommentListFragment : Fragment() {
     private fun setUpButtonActions() {
         mPrevious!!.setOnClickListener { _ ->
             mProgressBar!!.visibility = View.VISIBLE
-            mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.PREV)
+            mCommentListViewModel!!.getComments(
+                productId,
+                CommentListViewModel.RequestType.PREV,
+                activity!!.applicationContext
+            )
         }
 
         mNext!!.setOnClickListener { _ ->
             mProgressBar!!.visibility = View.VISIBLE
-            mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.NEXT)
+            mCommentListViewModel!!.getComments(
+                productId,
+                CommentListViewModel.RequestType.NEXT,
+                activity!!.applicationContext
+            )
         }
     }
 
