@@ -32,7 +32,7 @@ class CommentsRepository {
                 .enqueue(object : Callback<CommentsListResponse> {
                     override fun onResponse(call: Call<CommentsListResponse>, response: Response<CommentsListResponse>) {
                         if (response.isSuccessful) {
-                            comments!!.value = response.body()!!.posts
+                            comments!!.value = response.body()!!.comments
                         }
                     }
 

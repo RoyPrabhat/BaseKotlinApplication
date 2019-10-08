@@ -18,13 +18,11 @@ class ApplicationModule(private val application: MyApplication) {
     }
 
     @Provides
-    @Inject
     internal fun providesProductRepository(productDB : ProductDB): ProductRepository {
         return ProductRepository(productDB)
     }
 
     @Provides
-    @Inject
     internal fun providesCommentRepository(): CommentsRepository {
         return CommentsRepository()
     }

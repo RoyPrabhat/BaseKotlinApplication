@@ -7,7 +7,6 @@ import com.example.wellthydemoapp.repository.ProductRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class ViewModelFactory @Inject
 constructor(
     val mProductRepository: ProductRepository,

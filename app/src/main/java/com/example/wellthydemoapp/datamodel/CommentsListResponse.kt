@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 class CommentsListResponse (
     @SerializedName("comments")
     @Expose
-    var posts: ArrayList<Comment>? = null
+    var comments: ArrayList<Comment>? = null
 )

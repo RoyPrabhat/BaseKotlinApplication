@@ -135,10 +135,7 @@ class ProductListFragment : Fragment() {
                 mProgressBar!!.visibility = View.VISIBLE
                 mProductListViewModel!!.getProductList("", activity!!.applicationContext)
             }
-            mNameFilter!!.setText("")
-            mTagLineFiler!!.setText("")
-
-
+            clearFilterValues()
         }
     }
 
@@ -147,6 +144,7 @@ class ProductListFragment : Fragment() {
             val selectedDate = data!!.getStringExtra("selectedDate")
             mSelectedDate!!.text = selectedDate
             mProgressBar!!.visibility = View.VISIBLE
+            clearFilterValues()
             mProductListViewModel!!.getProductList(selectedDate, activity!!.applicationContext)
         }
     }
@@ -161,6 +159,11 @@ class ProductListFragment : Fragment() {
         Toast.makeText(activity, "No data available for the selted filter/Date", Toast.LENGTH_SHORT).show()
         mProdList!!.clear();
         mProdListAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun clearFilterValues() {
+        mNameFilter!!.setText("")
+        mTagLineFiler!!.setText("")
     }
 
 }

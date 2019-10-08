@@ -126,10 +126,4 @@ class CommentListFragment : Fragment() {
         mCommentListAdapter!!.notifyDataSetChanged()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mCommentList!!.clear();
-        mCommentListAdapter!!.notifyDataSetChanged()
-    }
-
 }
