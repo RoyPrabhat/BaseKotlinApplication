@@ -63,19 +63,26 @@ class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskComp
         productList!!.value = result?.let { ArrayList(it) }
     }
 
-    fun getFilteredProduct(name: String, tagLine: String): MutableLiveData<ArrayList<Post>> {
+    fun getFilteredProduct(name: String = "", tagLine: String = ""): MutableLiveData<ArrayList<Post>> {
         if (productList == null)
             productList = MutableLiveData()
-        if(productList!!.value!!.size != 0){
-            if(name == "" && tagLine != "" ){
-                productList!!.value = DataFilterUtility.filterDataByTagline(productList!!.value!!, tagLine)
-            } else if(name != "" && tagLine == "" ) {
-                productList!!.value = DataFilterUtility.filterDataByName(productList!!.value!!, name)
+
+        if(productList?.value != null){
+            if(productList?.value?.size != 0){
+                if(name == "" && tagLine != "" ){
+                    productList!!.value = DataFilterUtility.filterDataByTagline(productList!!.value!!, tagLine)
+                } else if(name != "" && tagLine == "" ) {
+                    productList!!.value = DataFilterUtility.filterDataByName(productList!!.value!!, name)
+                } else {
+                    productList!!.value = DataFilterUtility.filterData(productList!!.value!!, name, tagLine)
+                }
             } else {
-                productList!!.value = DataFilterUtility.filterData(productList!!.value!!, name, tagLine)
+                productList!!.value = null
             }
         } else {
-            productList!!.value = null}
+            productList!!.value = null
+        }
+
         return productList!!
     }
 

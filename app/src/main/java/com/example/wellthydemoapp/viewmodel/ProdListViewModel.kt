@@ -12,8 +12,16 @@ import javax.inject.Inject
 class ProdListViewModel
 @Inject constructor(val productRepository: ProductRepository) : ViewModel() {
 
+    lateinit var date : String
+
     fun getProductList(date: String, applicationContext: Context): LiveData<ArrayList<Post>> {
-        return productRepository.getProductByDate(date, applicationContext)
+        if( date == ""){
+            return productRepository.getProductByDate(this.date, applicationContext)
+        } else {
+            this.date = date
+            return productRepository.getProductByDate(date, applicationContext)
+        }
+
     }
 
     fun getFilteredProduct(name: String, tagLine: String): LiveData<ArrayList<Post>> {

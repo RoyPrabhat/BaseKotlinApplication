@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,6 +21,7 @@ import com.example.wellthydemoapp.util.DateUtil
 import com.example.wellthydemoapp.view.comment.CommentsListActivity
 import com.example.wellthydemoapp.viewmodel.ProdListViewModel
 import com.example.wellthydemoapp.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_product_list.*
 import javax.inject.Inject
 
 class ProductListFragment : Fragment() {
@@ -33,10 +32,16 @@ class ProductListFragment : Fragment() {
     private var mProductListViewModel: ProdListViewModel? = null
     private var mProgressBar: ProgressBar? = null
     private var mSelectDate: Button? = null
+    private var mAddFilter: Button? = null
+    private var mClearFilter: Button? = null
     private var mSelectedDate: TextView? = null
+    private var mNameFilter: EditText? = null
+    private var mTagLineFiler: EditText? = null
+
     val COLUMN_COUNT = 2
     val REQUEST_CODE = 11
     val PRODUCT_ID = "PRODUCT_ID"
+
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
 
@@ -67,6 +72,13 @@ class ProductListFragment : Fragment() {
         mProgressBar = view!!.findViewById(com.example.wellthydemoapp.R.id.progressBar)
         mSelectDate = view!!.findViewById(com.example.wellthydemoapp.R.id.selectDate)
         mSelectedDate = view!!.findViewById(com.example.wellthydemoapp.R.id.selectedDate)
+
+        mAddFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.addFilter)
+        mClearFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.clearFilter)
+
+        mNameFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.nameFilter)
+        mTagLineFiler = view!!.findViewById(com.example.wellthydemoapp.R.id.taglineFilter)
+
         mSelectedDate!!.text = DateUtil.currentDate
         mProdList = ArrayList()
         initializeViewModel()
@@ -99,7 +111,10 @@ class ProductListFragment : Fragment() {
         mProductListViewModel!!.getProductList(DateUtil.currentDate, activity!!.applicationContext).observe(viewLifecycleOwner, Observer { newList ->
             if (newList != null && newList.size > 0) {
                 updateProductList(newList)
+            } else {
+                showNoDataAvailableView()
             }
+            mProgressBar!!.visibility = View.GONE
         })
     }
 
@@ -108,6 +123,22 @@ class ProductListFragment : Fragment() {
             val newFragment = DatePickerFragment()
             newFragment.setTargetFragment(this, REQUEST_CODE)
             newFragment.show(fragmentManager!!, "DatePicker")
+        }
+
+        mAddFilter!!.setOnClickListener { _ ->
+            mProgressBar!!.visibility = View.VISIBLE
+            mProductListViewModel!!.getFilteredProduct(mNameFilter!!.text.toString(), mTagLineFiler!!.text.toString())
+        }
+
+        mClearFilter!!.setOnClickListener { _ ->
+            if(mNameFilter!!.getText().toString() != ""  || mTagLineFiler!!.getText().toString() != "") {
+                mProgressBar!!.visibility = View.VISIBLE
+                mProductListViewModel!!.getProductList("", activity!!.applicationContext)
+            }
+            mNameFilter!!.setText("")
+            mTagLineFiler!!.setText("")
+
+
         }
     }
 
@@ -121,9 +152,14 @@ class ProductListFragment : Fragment() {
     }
 
     private fun updateProductList(newList: ArrayList<Post>) {
-        mProgressBar!!.visibility = View.GONE
         mProdList!!.clear();
         mProdList!!.addAll(newList);
+        mProdListAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun showNoDataAvailableView() {
+        Toast.makeText(activity, "No data available for the selted filter/Date", Toast.LENGTH_SHORT).show()
+        mProdList!!.clear();
         mProdListAdapter!!.notifyDataSetChanged()
     }
 
