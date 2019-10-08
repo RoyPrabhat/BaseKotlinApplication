@@ -14,9 +14,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:name=".base.MyApplication">
-        <activity android:name=".view.prodlist.ProductListActivity"/>
-        <activity android:name=".view.comment.CommentsListActivity"/>
-        <activity android:name=".view.splash.SplashActivity">
+        <activity android:name=".view.prodlist.ProductListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.comment.CommentsListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.splash.SplashActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

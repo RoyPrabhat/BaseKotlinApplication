@@ -3,26 +3,23 @@ package com.example.wellthydemoapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.datamodel.Comment
-import com.example.wellthydemoapp.datamodel.Post
-import com.example.wellthydemoapp.util.ConnectivityUtil
-import com.squareup.picasso.Picasso
-import java.util.ArrayList
+import java.util.*
 
 class CommentListAdapter (
     private val mCommentList: ArrayList<Comment>?,
-    private val mContext: FragmentActivity?
-   // private val itemClickListener: ItemClickListener
+    private val mContext: FragmentActivity?,
+    private val itemClickListener: ItemClickListener
 ) :
     RecyclerView.Adapter<CommentListAdapter.MyViewHolder>() {
 
     interface ItemClickListener {
-        fun onClick(dogName: String)
+        fun onClick(message: String?)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -34,7 +31,7 @@ class CommentListAdapter (
         holder.mComment.text = mCommentList!![position].body
         holder.mVotes.text = "Votes : " + mCommentList!![position].votes
         holder.mDate.text = "Posted on : " + mCommentList!![position].creationTime
-      //  holder.bind(mProdList!![position].id, itemClickListener);
+        holder.bind(mCommentList!![position].body, itemClickListener);
     }
 
     override fun getItemCount(): Int {
@@ -47,16 +44,18 @@ class CommentListAdapter (
         var mComment: TextView
         var mVotes: TextView
         var mDate: TextView
+        var mShare: ImageButton
 
         init {
             mComment = itemView.findViewById(R.id.comment)
             mVotes = itemView.findViewById(R.id.votes)
             mDate = itemView.findViewById(R.id.date)
+            mShare = itemView.findViewById(R.id.share)
         }
 
 
-        fun bind(prodId: Int?, listener: ItemClickListener) {
-            itemView.setOnClickListener { listener.onClick(prodId.toString()) }
+        fun bind(message: String?, listener: ItemClickListener) {
+            mShare.setOnClickListener { listener.onClick(message) }
         }
     }
 }
