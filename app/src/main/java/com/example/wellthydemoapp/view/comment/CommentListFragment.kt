@@ -95,8 +95,10 @@ class CommentListFragment : Fragment() {
         mProgressBar!!.visibility = View.VISIBLE
         mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.NEXT)
             ?.observe(viewLifecycleOwner, Observer { newList ->
-                if (newList != null) {
+                if (newList != null && newList.size > 0) {
                     updateProductList(newList)
+                } else {
+                    showNoDataAvailableView()
                 }
             })
     }
@@ -124,6 +126,11 @@ class CommentListFragment : Fragment() {
         mCommentList!!.clear();
         mCommentList!!.addAll(newList);
         mCommentListAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun showNoDataAvailableView() {
+        mProgressBar!!.visibility = View.GONE
+        Toast.makeText(activity, "No more comments", Toast.LENGTH_SHORT).show()
     }
 
 }
