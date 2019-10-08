@@ -18,7 +18,7 @@ class CommentListAdapter(
 ) : RecyclerView.Adapter<CommentListAdapter.MyViewHolder>() {
 
     interface ItemClickListener {
-        fun onClick(message: String?)
+        fun onClick(message: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -28,9 +28,9 @@ class CommentListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mComment.text = mCommentList!![position].body
-        holder.mVotes.text = "Votes : " + mCommentList!![position].votes
-        holder.mDate.text = "Posted on : " + mCommentList!![position].creationTime
-        holder.bind(mCommentList!![position].body, itemClickListener);
+        holder.mVotes.text = mContext!!.getString(R.string.votes_count) + mCommentList!![position].votes
+        holder.mDate.text = mContext!!.getString(R.string.posted_on) + mCommentList!![position].creationTime
+        mCommentList!![position].body?.let { holder.bind(it, itemClickListener) };
     }
 
     override fun getItemCount(): Int {
@@ -53,7 +53,7 @@ class CommentListAdapter(
         }
 
 
-        fun bind(message: String?, listener: ItemClickListener) {
+        fun bind(message: String, listener: ItemClickListener) {
             mShare.setOnClickListener { listener.onClick(message) }
         }
     }

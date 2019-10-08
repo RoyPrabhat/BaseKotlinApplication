@@ -23,32 +23,32 @@
             android:layout_height="wrap_content"
             android:id="@+id/selectDate"
             android:background="@drawable/button_rounded"
-            android:padding="8dp"
+            android:padding="@dimen/margin_8dp"
             app:layout_constraintStart_toEndOf="@+id/selectedDate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/padding_16"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/prodList"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/taglineFilter">
+            android:layout_marginEnd="@dimen/padding_16" android:layout_marginStart="@dimen/padding_16"
+            android:layout_marginTop="@dimen/margin_8dp" app:layout_constraintTop_toBottomOf="@+id/taglineFilter">
     </androidx.recyclerview.widget.RecyclerView>
 
     <ProgressBar
             style="?android:attr/progressBarStyle"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/progress_bar_dimension"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="@+id/prodList" app:layout_constraintStart_toStartOf="@+id/prodList"
-            app:layout_constraintTop_toTopOf="@+id/prodList" android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toTopOf="@+id/prodList" android:layout_marginBottom="@dimen/margin_8dp"
             app:layout_constraintBottom_toBottomOf="@+id/prodList"/>
 
     <Button
@@ -71,7 +71,7 @@
             android:background="@drawable/button_rounded"
             app:layout_constraintStart_toEndOf="@+id/taglineFilter"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="18dp" app:layout_constraintTop_toBottomOf="@+id/addFilter"/>
+            android:layout_marginTop="@dimen/clear_filter_margin" app:layout_constraintTop_toBottomOf="@+id/addFilter"/>
 
     <EditText
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
             android:hint="Enter Name"
             android:ems="10"
             android:id="@+id/nameFilter"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/product_name_margin"
             app:layout_constraintTop_toBottomOf="@+id/selectDate" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/addFilter"/>
 
@@ -92,7 +92,7 @@
             android:ems="10"
             android:id="@+id/taglineFilter"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/clearFilter" android:layout_marginTop="21dp"
+            app:layout_constraintEnd_toStartOf="@+id/clearFilter" android:layout_marginTop="@dimen/tagline_margin"
             app:layout_constraintTop_toBottomOf="@+id/nameFilter"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

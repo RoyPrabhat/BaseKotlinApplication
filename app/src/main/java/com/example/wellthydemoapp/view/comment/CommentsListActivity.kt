@@ -3,6 +3,7 @@ package com.example.wellthydemoapp.view.comment
 import android.os.Bundle
 import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.base.BaseActivity
+import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
 
 class CommentsListActivity : BaseActivity() {
 
@@ -11,7 +12,7 @@ class CommentsListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productId = getIntent().getStringExtra(PRODUCT_ID);
-        setUpFragment(CommentListFragment(), productId)
+        setUpFragmentWithArgs(CommentListFragment(), productId)
         setUpToolbar(getString(R.string.comments))
         displayBackButton(true)
 

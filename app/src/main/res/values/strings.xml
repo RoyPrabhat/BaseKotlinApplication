@@ -3,4 +3,7 @@
 
     <string name="product_list">Products</string>
     <string name="comments">Comments</string>
+
+    <string name="votes_count">Votes : </string>
+    <string name="posted_on">Posted on : </string>
 </resources>

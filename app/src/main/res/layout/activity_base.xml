@@ -9,8 +9,8 @@
     <include layout="@layout/my_custom_toolbar" android:id="@+id/include"/>
 
     <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
             android:id="@+id/base_fragment"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

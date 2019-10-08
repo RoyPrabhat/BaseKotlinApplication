@@ -16,6 +16,7 @@ import com.example.wellthydemoapp.adapter.ProductListAdapter
 import com.example.wellthydemoapp.adapter.ProductListAdapter.ItemClickListener
 import com.example.wellthydemoapp.base.MyApplication
 import com.example.wellthydemoapp.component.DatePickerFragment
+import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
 import com.example.wellthydemoapp.datamodel.Post
 import com.example.wellthydemoapp.util.DateUtil
 import com.example.wellthydemoapp.view.comment.CommentsListActivity
@@ -27,9 +28,8 @@ import javax.inject.Inject
 class ProductListFragment : Fragment() {
 
     private var mProdList: ArrayList<Post>? = null
+
     private var mBreedRecyclerView: RecyclerView? = null
-    private var mProdListAdapter: ProductListAdapter? = null
-    private var mProductListViewModel: ProdListViewModel? = null
     private var mProgressBar: ProgressBar? = null
     private var mSelectDate: Button? = null
     private var mAddFilter: Button? = null
@@ -38,9 +38,11 @@ class ProductListFragment : Fragment() {
     private var mNameFilter: EditText? = null
     private var mTagLineFiler: EditText? = null
 
+    private var mProdListAdapter: ProductListAdapter? = null
+    private var mProductListViewModel: ProdListViewModel? = null
+
     val COLUMN_COUNT = 2
     val REQUEST_CODE = 11
-    val PRODUCT_ID = "PRODUCT_ID"
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
@@ -48,7 +50,6 @@ class ProductListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-
         (activity!!.application as MyApplication)
             .applicationComponent!!
             .inject(this)
@@ -68,6 +69,13 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setUp() {
+        initialize()
+        initializeRecyclerView()
+        initializeObserver()
+        setUpButtonActions()
+    }
+
+    private fun initialize() {
         mBreedRecyclerView = view!!.findViewById(com.example.wellthydemoapp.R.id.prodList)
         mProgressBar = view!!.findViewById(com.example.wellthydemoapp.R.id.progressBar)
         mSelectDate = view!!.findViewById(com.example.wellthydemoapp.R.id.selectDate)
@@ -75,19 +83,12 @@ class ProductListFragment : Fragment() {
 
         mAddFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.addFilter)
         mClearFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.clearFilter)
-
         mNameFilter = view!!.findViewById(com.example.wellthydemoapp.R.id.nameFilter)
         mTagLineFiler = view!!.findViewById(com.example.wellthydemoapp.R.id.taglineFilter)
 
         mSelectedDate!!.text = DateUtil.currentDate
         mProdList = ArrayList()
-        initializeViewModel()
-        initializeRecyclerView()
-        initializeObserver()
-        setUpButton()
-    }
 
-    private fun initializeViewModel() {
         mProductListViewModel = ViewModelProviders.of(this, mViewModelFactory)
             .get(ProdListViewModel::class.java)
     }
@@ -118,7 +119,7 @@ class ProductListFragment : Fragment() {
         })
     }
 
-    private fun setUpButton() {
+    private fun setUpButtonActions() {
         mSelectDate!!.setOnClickListener { _ ->
             val newFragment = DatePickerFragment()
             newFragment.setTargetFragment(this, REQUEST_CODE)

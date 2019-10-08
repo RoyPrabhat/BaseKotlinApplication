@@ -5,17 +5,24 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.example.wellthydemoapp.constant.Constants
+import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
 
 open class BaseActivity : AppCompatActivity() {
 
     private var mToolBar: Toolbar? = null
-    val PRODUCT_ID = "PRODUCT_ID"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.wellthydemoapp.R.layout.activity_base)
     }
 
-    open fun setUpFragment(fragment: Fragment, productId: String? = "") {
+    open fun setUpFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(com.example.wellthydemoapp.R.id.base_fragment, fragment)
+        transaction.commit()
+    }
+
+    open fun setUpFragmentWithArgs(fragment: Fragment, productId: String) {
         val args = Bundle()
         args.putString(PRODUCT_ID, productId)
         fragment.setArguments(args)

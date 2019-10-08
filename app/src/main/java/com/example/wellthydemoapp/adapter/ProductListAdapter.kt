@@ -48,7 +48,6 @@ class ProductListAdapter
         return mProdList?.size ?: 0
     }
 
-
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var mProdName: TextView

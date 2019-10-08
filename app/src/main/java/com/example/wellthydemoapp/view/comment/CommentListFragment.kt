@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wellthydemoapp.adapter.CommentListAdapter
 import com.example.wellthydemoapp.base.MyApplication
+import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
 import com.example.wellthydemoapp.datamodel.Comment
 import com.example.wellthydemoapp.util.WhatsAppUtil
 import com.example.wellthydemoapp.viewmodel.CommentListViewModel
@@ -24,14 +25,15 @@ import javax.inject.Inject
 class CommentListFragment : Fragment() {
 
     private var mCommentList: ArrayList<Comment>? = null
+    private lateinit var productId: String
+
     private var mCommentRecyclerView: RecyclerView? = null
     private var mProgressBar: ProgressBar? = null
-    private var mCommentListViewModel: CommentListViewModel? = null
-    private var mCommentListAdapter: CommentListAdapter? = null
     private var mPrevious: Button? = null
     private var mNext: Button? = null
-    private lateinit var productId: String
-    val PRODUCT_ID = "PRODUCT_ID"
+
+    private var mCommentListViewModel: CommentListViewModel? = null
+    private var mCommentListAdapter: CommentListAdapter? = null
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
@@ -39,7 +41,6 @@ class CommentListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-
         (activity!!.application as MyApplication)
             .applicationComponent!!
             .inject(this)
@@ -59,26 +60,29 @@ class CommentListFragment : Fragment() {
     }
 
     private fun setUp() {
+        initialize()
+        initializeRecyclerView()
+        initializeObserver()
+        setUpButtonActions()
+    }
+
+    private fun initialize() {
         mCommentRecyclerView = view!!.findViewById(com.example.wellthydemoapp.R.id.commentList)
         mProgressBar = view!!.findViewById(com.example.wellthydemoapp.R.id.commentProgressBar)
+        mPrevious = view!!.findViewById(com.example.wellthydemoapp.R.id.previous)
+        mNext = view!!.findViewById(com.example.wellthydemoapp.R.id.next)
         mCommentList = ArrayList()
         val args = arguments
         productId = args!!.getString(PRODUCT_ID, "")
-        initializeViewModel()
-        initializeRecyclerView()
-        initializeObserver()
-        setUpButton()
-    }
-
-    private fun initializeViewModel() {
         mCommentListViewModel = ViewModelProviders.of(this, mViewModelFactory)
             .get(CommentListViewModel::class.java)
     }
 
+
     private fun initializeRecyclerView() {
         mCommentListAdapter = CommentListAdapter(mCommentList, activity,
             object : CommentListAdapter.ItemClickListener {
-                override fun onClick(message: String?) {
+                override fun onClick(message: String) {
                     WhatsAppUtil.sendWhatAppMessage(activity, message)
                 }
 
@@ -100,10 +104,7 @@ class CommentListFragment : Fragment() {
             })
     }
 
-    private fun setUpButton() {
-        mPrevious = view!!.findViewById(com.example.wellthydemoapp.R.id.previous)
-        mNext = view!!.findViewById(com.example.wellthydemoapp.R.id.next)
-
+    private fun setUpButtonActions() {
         mPrevious!!.setOnClickListener { _ ->
             mProgressBar!!.visibility = View.VISIBLE
             mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.PREV)
@@ -113,7 +114,6 @@ class CommentListFragment : Fragment() {
             mProgressBar!!.visibility = View.VISIBLE
             mCommentListViewModel!!.getComments(productId, CommentListViewModel.RequestType.NEXT)
         }
-
     }
 
     private fun updateProductList(newList: ArrayList<Comment>) {

@@ -6,8 +6,8 @@
         android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/next"
@@ -15,7 +15,7 @@
 
     <Button
             android:text="Prev"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_dp"
             android:layout_height="wrap_content"
             android:id="@+id/previous" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/next"
@@ -24,7 +24,7 @@
 
     <Button
             android:text="Next"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_dp"
             android:layout_height="wrap_content"
             android:id="@+id/next"
             app:layout_constraintStart_toEndOf="@+id/previous" app:layout_constraintHorizontal_bias="0.5"
@@ -38,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/commentProgressBar" app:layout_constraintEnd_toEndOf="@+id/commentList"
-            app:layout_constraintStart_toStartOf="@+id/commentList" android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/commentList" android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/commentList" android:layout_marginStart="@dimen/margin_8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/commentList" android:layout_marginTop="@dimen/margin_8dp"
             app:layout_constraintTop_toTopOf="@+id/commentList"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
