@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.example.wellthydemoapp.R
 
 object WhatsAppUtil {
 
@@ -25,8 +26,7 @@ object WhatsAppUtil {
             activity.startActivity(Intent.createChooser(waIntent, title));
 
         } catch (exception: PackageManager.NameNotFoundException) {
-            Toast.makeText(activity, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                .show();
+            ToastUtil.showToast(activity, activity.getString(R.string.no_whatsapp))
         } catch (e: Exception) {
             e.toString();
         }

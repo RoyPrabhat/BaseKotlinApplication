@@ -6,16 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.adapter.CommentListAdapter
 import com.example.wellthydemoapp.base.MyApplication
 import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
 import com.example.wellthydemoapp.datamodel.Comment
+import com.example.wellthydemoapp.util.ToastUtil
 import com.example.wellthydemoapp.util.WhatsAppUtil
 import com.example.wellthydemoapp.viewmodel.CommentListViewModel
 import com.example.wellthydemoapp.viewmodel.ViewModelFactory
@@ -125,7 +126,7 @@ class CommentListFragment : Fragment() {
 
     private fun showNoDataAvailableView() {
         mProgressBar!!.visibility = View.GONE
-        Toast.makeText(activity, "No more comments", Toast.LENGTH_SHORT).show()
+        ToastUtil.showToast(activity, getString(R.string.no_new_comments))
     }
 
 }

@@ -12,17 +12,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.adapter.ProductListAdapter
 import com.example.wellthydemoapp.adapter.ProductListAdapter.ItemClickListener
 import com.example.wellthydemoapp.base.MyApplication
 import com.example.wellthydemoapp.component.DatePickerFragment
 import com.example.wellthydemoapp.constant.Constants.Companion.PRODUCT_ID
+import com.example.wellthydemoapp.constant.Constants.Companion.SELECTED_DATE
 import com.example.wellthydemoapp.datamodel.Post
 import com.example.wellthydemoapp.util.DateUtil
+import com.example.wellthydemoapp.util.ToastUtil
 import com.example.wellthydemoapp.view.comment.CommentsListActivity
 import com.example.wellthydemoapp.viewmodel.ProdListViewModel
 import com.example.wellthydemoapp.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_product_list.*
 import javax.inject.Inject
 
 class ProductListFragment : Fragment() {
@@ -142,7 +144,7 @@ class ProductListFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val selectedDate = data!!.getStringExtra("selectedDate")
+            val selectedDate = data!!.getStringExtra(SELECTED_DATE)
             mSelectedDate!!.text = selectedDate
             mProgressBar!!.visibility = View.VISIBLE
             clearFilterValues()
@@ -157,7 +159,7 @@ class ProductListFragment : Fragment() {
     }
 
     private fun showNoDataAvailableView() {
-        Toast.makeText(activity, "No data available for the selted filter/Date", Toast.LENGTH_SHORT).show()
+        ToastUtil.showToast(activity, getString(R.string.no_data_available))
         mProdList!!.clear();
         mProdListAdapter!!.notifyDataSetChanged()
     }

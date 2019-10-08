@@ -7,8 +7,11 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatDialogFragment
+import com.example.wellthydemoapp.constant.Constants.Companion.DATE_FORMAT
+import com.example.wellthydemoapp.constant.Constants.Companion.SELECTED_DATE
 import java.util.*
 
 class DatePickerFragment : AppCompatDialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -29,12 +32,12 @@ class DatePickerFragment : AppCompatDialogFragment(), DatePickerDialog.OnDateSet
         c.set(Calendar.YEAR, year)
         c.set(Calendar.MONTH, month)
         c.set(Calendar.DAY_OF_MONTH, day)
-        val selectedDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(c.time)
+        val selectedDate = SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH).format(c.time)
 
         targetFragment!!.onActivityResult(
             targetRequestCode,
             Activity.RESULT_OK,
-            Intent().putExtra("selectedDate", selectedDate)
+            Intent().putExtra(SELECTED_DATE, selectedDate)
         )
     }
 }

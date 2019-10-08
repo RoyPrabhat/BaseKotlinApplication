@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">WellthyDemoApp</string>
 
+    // toolbar titles
     <string name="product_list">Products</string>
     <string name="comments">Comments</string>
 
+    // comment list item labels
     <string name="votes_count">Votes : </string>
     <string name="posted_on">Posted on : </string>
+
+    // Toast messages
+    <string name="no_new_comments">No more comments</string>
+    <string name="no_data_available">No data available for the selted filter/Date</string>
+    <string name="no_whatsapp">WhatsApp is not Installed on the device</string>
 </resources>
