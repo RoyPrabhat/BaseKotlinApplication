@@ -6,20 +6,20 @@ import com.example.wellthydemoapp.api.ProductApiClient
 import com.example.wellthydemoapp.api.ProductApiService
 import com.example.wellthydemoapp.datamodel.Post
 import com.example.wellthydemoapp.datamodel.ProductListResponse
+import com.example.wellthydemoapp.db.InsertTask
 import com.example.wellthydemoapp.db.ProductDB
+import com.example.wellthydemoapp.db.RetrieveTask
+import com.example.wellthydemoapp.db.TaskCompleted
 import com.example.wellthydemoapp.util.ConnectivityUtil
+import com.example.wellthydemoapp.util.DataFilterUtility
 import com.example.wellthydemoapp.util.DateUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-import com.example.wellthydemoapp.db.InsertTask
-import com.example.wellthydemoapp.db.RetrieveTask
-import com.example.wellthydemoapp.db.TaskCompleted
-import com.example.wellthydemoapp.util.DataFilterUtility
 
 
-class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskCompleted  {
+class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskCompleted {
 
     private var productList: MutableLiveData<ArrayList<Post>>? = null
     private lateinit var mProductApiService: ProductApiService
@@ -31,13 +31,14 @@ class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskComp
         if (productList == null)
             productList = MutableLiveData()
 
-        if(ConnectivityUtil.isNetworkConnected(applicationContext)) {
+        if (ConnectivityUtil.isNetworkConnected(applicationContext)) {
             mProductApiService.getProductByDate(date)
                 .enqueue(object : Callback<ProductListResponse> {
+
                     override fun onResponse(call: Call<ProductListResponse>, response: Response<ProductListResponse>) {
                         if (response.isSuccessful) {
                             productList!!.value = response.body()!!.posts
-                            if(date == DateUtil.currentDate ){
+                            if (date == DateUtil.currentDate) {
                                 InsertTask(productDB.productDao(), productList!!.value!!).execute()
                             }
                         }
@@ -49,12 +50,11 @@ class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskComp
 
                 })
         } else {
-
-            if(date == DateUtil.currentDate ){
+            if (date == DateUtil.currentDate) {
                 RetrieveTask(productDB.productDao(), this).execute()
             }
 
-            }
+        }
 
         return productList!!
     }
@@ -67,11 +67,11 @@ class ProductRepository @Inject constructor(val productDB: ProductDB) : TaskComp
         if (productList == null)
             productList = MutableLiveData()
 
-        if(productList?.value != null){
-            if(productList?.value?.size != 0){
-                if(name == "" && tagLine != "" ){
+        if (productList?.value != null) {
+            if (productList?.value?.size != 0) {
+                if (name == "" && tagLine != "") {
                     productList!!.value = DataFilterUtility.filterDataByTagline(productList!!.value!!, tagLine)
-                } else if(name != "" && tagLine == "" ) {
+                } else if (name != "" && tagLine == "") {
                     productList!!.value = DataFilterUtility.filterDataByName(productList!!.value!!, name)
                 } else {
                     productList!!.value = DataFilterUtility.filterData(productList!!.value!!, name, tagLine)

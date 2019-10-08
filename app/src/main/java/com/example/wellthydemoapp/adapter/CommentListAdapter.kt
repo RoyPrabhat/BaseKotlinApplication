@@ -11,12 +11,11 @@ import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.datamodel.Comment
 import java.util.*
 
-class CommentListAdapter (
+class CommentListAdapter(
     private val mCommentList: ArrayList<Comment>?,
     private val mContext: FragmentActivity?,
     private val itemClickListener: ItemClickListener
-) :
-    RecyclerView.Adapter<CommentListAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<CommentListAdapter.MyViewHolder>() {
 
     interface ItemClickListener {
         fun onClick(message: String?)

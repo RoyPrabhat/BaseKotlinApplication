@@ -11,8 +11,7 @@ import com.example.wellthydemoapp.R
 import com.example.wellthydemoapp.datamodel.Post
 import com.example.wellthydemoapp.util.ConnectivityUtil
 import com.squareup.picasso.Picasso
-
-import java.util.ArrayList
+import java.util.*
 
 class ProductListAdapter
     (
@@ -33,7 +32,7 @@ class ProductListAdapter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mProdName.text = mProdList!![position].name
-        if(ConnectivityUtil.isNetworkConnected(mContext!!.applicationContext)) {
+        if (ConnectivityUtil.isNetworkConnected(mContext!!.applicationContext)) {
             Picasso.with(mContext).load(mProdList[position].thumbnail!!.imageUrl)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
@@ -42,7 +41,7 @@ class ProductListAdapter
             holder.mProdImage.setImageDrawable(mContext.getDrawable(R.drawable.product_loading));
         }
 
-          holder.bind(mProdList!![position].id, itemClickListener);
+        holder.bind(mProdList!![position].id, itemClickListener);
     }
 
     override fun getItemCount(): Int {
@@ -59,7 +58,6 @@ class ProductListAdapter
             mProdName = itemView.findViewById(R.id.prodName)
             mProdImage = itemView.findViewById(R.id.prodImage)
         }
-
 
         fun bind(prodId: Int?, listener: ItemClickListener) {
             itemView.setOnClickListener { listener.onClick(prodId.toString()) }

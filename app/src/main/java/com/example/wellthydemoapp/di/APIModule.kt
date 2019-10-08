@@ -1,6 +1,5 @@
 package com.example.wellthydemoapp.di
 
-import com.example.wellthydemoapp.api.ProductApiService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

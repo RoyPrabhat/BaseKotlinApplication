@@ -6,7 +6,7 @@ import com.example.wellthydemoapp.base.BaseActivity
 
 class CommentsListActivity : BaseActivity() {
 
-    lateinit var productId : String
+    lateinit var productId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

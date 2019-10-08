@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.wellthydemoapp.repository.CommentsRepository
 import com.example.wellthydemoapp.repository.ProductRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class ViewModelFactory @Inject
 constructor(

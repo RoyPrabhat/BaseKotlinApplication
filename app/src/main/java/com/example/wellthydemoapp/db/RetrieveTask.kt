@@ -1,7 +1,6 @@
 package com.example.wellthydemoapp.db
 
 import android.os.AsyncTask
-import android.util.Log
 import com.example.wellthydemoapp.datamodel.Post
 
 class RetrieveTask(

@@ -24,13 +24,13 @@ open class BaseActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    open fun setUpToolbar(title : String) {
+    open fun setUpToolbar(title: String) {
         mToolBar = findViewById(com.example.wellthydemoapp.R.id.include);
         setSupportActionBar(mToolBar)
         mToolBar!!.title = title;
     }
 
-    open fun displayBackButton(shouldDisplayBackButton : Boolean) {
+    open fun displayBackButton(shouldDisplayBackButton: Boolean) {
         supportActionBar!!.setDisplayHomeAsUpEnabled(shouldDisplayBackButton)
     }
 

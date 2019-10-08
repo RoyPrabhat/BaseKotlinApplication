@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import java.util.*
 
 class DatePickerFragment : AppCompatDialogFragment(), DatePickerDialog.OnDateSetListener {
+
     internal val c = Calendar.getInstance()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

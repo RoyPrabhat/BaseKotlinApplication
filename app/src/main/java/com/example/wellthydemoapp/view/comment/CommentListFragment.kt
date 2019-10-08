@@ -1,8 +1,5 @@
 package com.example.wellthydemoapp.view.comment
 
-import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +30,7 @@ class CommentListFragment : Fragment() {
     private var mCommentListAdapter: CommentListAdapter? = null
     private var mPrevious: Button? = null
     private var mNext: Button? = null
-    private lateinit var productId : String
+    private lateinit var productId: String
     val PRODUCT_ID = "PRODUCT_ID"
 
     @Inject
@@ -66,7 +63,7 @@ class CommentListFragment : Fragment() {
         mProgressBar = view!!.findViewById(com.example.wellthydemoapp.R.id.commentProgressBar)
         mCommentList = ArrayList()
         val args = arguments
-        productId = args!!.getString(PRODUCT_ID,"")
+        productId = args!!.getString(PRODUCT_ID, "")
         initializeViewModel()
         initializeRecyclerView()
         initializeObserver()
@@ -120,9 +117,7 @@ class CommentListFragment : Fragment() {
     }
 
     private fun updateProductList(newList: ArrayList<Comment>) {
-        if (newList.size > 0) {
-            mProgressBar!!.visibility = View.GONE
-        }
+        mProgressBar!!.visibility = View.GONE
         mCommentList!!.clear();
         mCommentList!!.addAll(newList);
         mCommentListAdapter!!.notifyDataSetChanged()

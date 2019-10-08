@@ -1,17 +1,13 @@
 package com.example.wellthydemoapp.util
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.ConnectivityManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 
 object WhatsAppUtil {
 
-    fun sendWhatAppMessage(activity:FragmentActivity?, message: String? = "Dummy message"){
+    fun sendWhatAppMessage(activity: FragmentActivity?, message: String? = "Dummy message") {
         val pm = activity!!.packageManager
         try {
             var waIntent = Intent(Intent.ACTION_SEND);
@@ -25,10 +21,10 @@ object WhatsAppUtil {
             waIntent.putExtra(Intent.EXTRA_TEXT, message);
             activity.startActivity(Intent.createChooser(waIntent, "Share with"));
 
-        } catch (exception : PackageManager.NameNotFoundException) {
+        } catch (exception: PackageManager.NameNotFoundException) {
             Toast.makeText(activity, "WhatsApp not Installed", Toast.LENGTH_SHORT)
                 .show();
-        }catch(e: Exception ){
+        } catch (e: Exception) {
             e.toString();
         }
 
