@@ -1,5 +1,8 @@
 <resources>
+
+    // Splash screen texts
     <string name="app_name">Product App</string>
+    <string name="app_version">Version 1.0</string>
 
     // toolbar titles
     <string name="product_list">Products</string>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    //layout dimensions
     <dimen name="zero_dp">0dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
@@ -7,10 +9,16 @@
     <dimen name="product_dimension">200dp</dimen>
     <dimen name="product_image_height">150dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_64dp">64dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="comment_height">100dp</dimen>
     <dimen name="progress_bar_dimension">100dp</dimen>
     <dimen name="clear_filter_margin">18dp</dimen>
     <dimen name="product_name_margin">24dp</dimen>
     <dimen name="tagline_margin">21dp</dimen>
+
+    //text sizes
+    <dimen name="text_medium">24dp</dimen>
+    <dimen name="test_large">32dp</dimen>
+
 </resources>
